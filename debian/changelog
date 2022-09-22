@@ -1,3 +1,10 @@
+datefudge (1.26) unstable; urgency=medium
+
+  [ José Manuel Guillén ]
+  * Try to find datefudge.so next to the exe file first in order to make
+    it more portable.
+
+ -- Vedran Vidović <vvidovic@gmail.com>  Wed, 21 Oct 2020 10:24:26 +0200
 datefudge (1.25) unstable; urgency=medium
 
   [ Vedran Vidović ]

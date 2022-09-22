@@ -7,6 +7,7 @@ static=0
 date_file_path=""
 date_file_cache_ms="100"
 ld_preload_arg=""
+parentdir="$(dirname "$0")"
 
 usage()
 {
@@ -103,11 +104,15 @@ set_ld_environment()
 {
   lib="datefudge.so"
   libpath="@LIBDIR@"
-  set --  "$libpath"@MULTIARCH_PATTERN@"/datefudge/$lib"
+  set -- "$parentdir/$lib"
   if [ ! -e "$1" ]; then
-    echo "Cannot find $lib in $libpath" >&2
-    [ -z "$POSH_VERSION" ] || echo "You might have just encountered posh bug#636601, please try using another shell." >&2
-    exit 1;
+    echo "Cannot find $lib in $parentdir/" >&2
+    set --  "$libpath"@MULTIARCH_PATTERN@"/datefudge/$lib"
+    if [ ! -e "$1" ]; then
+      echo "Cannot find $lib in $libpath" >&2
+      [ -z "$POSH_VERSION" ] || echo "You might have just encountered posh bug#636601, please try using another shell." >&2
+      exit 1;
+    fi
   fi
   for path in "$@"; do
     add_ld_library_path "${path%/*}"
